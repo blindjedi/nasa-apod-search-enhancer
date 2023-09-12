@@ -50,3 +50,25 @@ def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any
         'apod_data': apod_data,
         'google_search_data': google_search_data['items']
     }
+
+
+if __name__ == '__main__':
+    # NASA APOD API Call
+    nasa_apod_base_url = 'https://api.nasa.gov/planetary/apod'
+    nasa_params = {
+        'api_key': os.environ['nasa_api_key']
+    }
+    apod_data = api_call(nasa_apod_base_url, nasa_params)
+
+    # Google Search API Call using APOD title
+    google_custom_search_base_url = 'https://www.googleapis.com/customsearch/v1'
+    google_params = {
+        'key': os.environ['google_api_key'],
+        'cx': os.environ['search_engine_id'],
+        'q': apod_data['title']
+    }
+    google_search_data = api_call(google_custom_search_base_url, google_params)
+
+    apod_with_additional_info = combine_results(apod_data, google_search_data)
+
+    print(f'apod with additional info results: {apod_with_additional_info}')
