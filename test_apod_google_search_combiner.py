@@ -54,3 +54,38 @@ def test_api_call_failure(mock_requests_get):
     assert 'Site Not Found' in str(exception.value)
 
 
+def test_combine_results():
+    '''
+    Test the combine_results function with sample APOD and Google search data.
+
+    Expected_result: combine_results should return a dictionary 
+    '''
+    apod_data = {
+        'title': 'Beautiful APOD Picture',
+        'date': '2023-01-01',
+        'explanation': 'This scene would be beautiful even without the comet.',
+        'hdurl': 'https://apod.nasa.gov/apod/image',
+        'media_type': 'image',
+        'service_version': 'v1',
+        'url': 'https://apod.nasa.gov/apod'
+
+    }
+    google_search_data = {
+        'queries': {'request': [{}]},
+        'context': {'title': 'Beautiful APOD Picture'},
+        'items': [
+            {'link': ''},
+            {'link': ''}
+        ],
+        'url': ''
+    }
+
+    expected_result = {
+        'apod_data': apod_data,
+        'google_search_data': google_search_data['items']
+    }
+
+    result = apod_google_search_combiner.combine_results(
+        apod_data, google_search_data)
+
+    assert result == expected_result
