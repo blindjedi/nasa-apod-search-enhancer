@@ -33,3 +33,20 @@ def api_call(url: str, params: dict[str: str]) -> dict[str: any]:
     else:
         raise Exception(
             f'Request failed with status code {response.status_code}', response.text)
+
+def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any]) -> Dict[str, Any]:
+    '''
+    Combines data from the NASA Astronomy Picture of the Day (APOD) API
+    and Google Custom Search API into a single dictionary.
+
+    Parameters:
+        apod_data (dict[str, Any]): Data from the APOD API.
+        google_search_data (dict[str, Any]): Data from the Google Custom Search API.
+
+    Returns:
+        dict[str, Any]: A dictionary containing combined information.
+    '''
+    return {
+        'apod_data': apod_data,
+        'google_search_data': google_search_data['items']
+    }
