@@ -73,4 +73,5 @@ if __name__ == '__main__':
 
     apod_with_additional_info = combine_results(apod_data, google_search_data)
 
-    print(f'apod with additional info results: {apod_with_additional_info}')
+    print(
+        f'apod with additional google search results: \n{apod_with_additional_info}')
