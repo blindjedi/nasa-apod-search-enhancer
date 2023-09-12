@@ -7,9 +7,9 @@ import apod_google_search_combiner
 @patch('apod_google_search_combiner.requests.get')
 def test_api_call_successful(mock_requests_get):
     '''
-          Test successful API call handling for api_call().
+    Test successful API call handling for api_call().
 
-        Expected Result: The api_call function should return a dictionary
+    Expected Result: The api_call function should return a dictionary
     '''
     expected_response = {
         'title': 'Beautiful APOD Picture',
