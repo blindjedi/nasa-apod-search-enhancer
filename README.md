@@ -27,9 +27,14 @@ Before running the script, make sure to set up your environment variables by cre
 - `search_engine_id`: Your Google Custom Search Engine ID.
 
 
-### Google 
+### Google Custom Search JSON API
 
-Install the required dependencies using the following command:
+https://developers.google.com/custom-search/v1/overview
+1. Create API Key
+2. Create Programmable Search Engine
+
+Set what to search to Search the entire web
+
 
 ### Example using virtual environment
 
