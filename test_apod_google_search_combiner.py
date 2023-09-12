@@ -32,3 +32,25 @@ def test_api_call_successful(mock_requests_get):
         nasa_apod_base_url, nasa_params)
 
     assert result == expected_response
+
+
+@patch('apod_google_search_combiner.requests.get')
+def test_api_call_failure(mock_requests_get):
+    '''
+    Test failure API call handling for api_call().
+
+    Expected Result: The api_call function should raise an Exception for non 200 status code
+    '''
+    mock_response = mock_requests_get.return_value
+    mock_response.status_code = 404
+    mock_response.text = 'Site Not Found'
+
+    with pytest.raises(Exception) as exception:
+        nasa_apod_base_url = 'https://api.nasa.gov/planetary/apod'
+        nasa_params = {'api_key': 'test_api_key'}
+        apod_google_search_combiner.api_call(nasa_apod_base_url, nasa_params)
+
+    assert 'Request failed with status code 404' in str(exception.value)
+    assert 'Site Not Found' in str(exception.value)
+
+
