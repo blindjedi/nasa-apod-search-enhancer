@@ -2,6 +2,7 @@ import os
 import requests
 
 from dotenv import load_dotenv
+from typing import Dict, Any
 
 # Load environment variables from .env into the script's environment
 load_dotenv()
@@ -13,9 +14,9 @@ for var_name in required_env_vars:
         raise ValueError(f"Environment variable '{var_name}' is not set.")
 
 
-def api_call(url: str, params: dict[str: str]) -> dict[str: any]:
+def api_call(url: str, params: Dict[str, str]) -> Dict[str, Any]:
     '''
-        Resusable api call for nasa and google custom search api
+    Resusable api call for nasa and google custom search api
 
     Parameters:
         url (str): The URL of the API endpoint.
@@ -33,6 +34,7 @@ def api_call(url: str, params: dict[str: str]) -> dict[str: any]:
     else:
         raise Exception(
             f'Request failed with status code {response.status_code}', response.text)
+
 
 def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any]) -> Dict[str, Any]:
     '''
