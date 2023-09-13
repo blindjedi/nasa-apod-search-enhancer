@@ -56,9 +56,44 @@ def test_api_call_failure(mock_requests_get):
         exception.value)
 
 
-def test_combine_results():
+def test_validate_apod_data_success():
     '''
-    Test the combine_results function with sample APOD and Google search data.
+    Test the success case of the validate_apod_data function.
+
+    Expected Result:
+    The validate_apod_data function should return True when provided with
+    valid APOD data.
+    '''
+    data = {
+        'title': 'Galaxy Cluster Abell 370 and Beyond',
+        'url': 'https://apod.nasa.gov/apod/image/2309/STSCI-HST-abell370_1024.jpg',
+        'date': '2023-09-12',
+        'explanation': "Some 4 billion light-years away, massive galaxy cluster Abell 370..."
+    }
+
+    result = apod_google_search_combiner.validate_apod_data(data)
+
+    assert result is True
+
+
+def test_validate_apod_data_failure():
+    '''
+    Test the failure case of the validate_apod_data function.
+
+    Expected Result:
+    The validate_apod_data function should return False when provided with
+    invalid APOD data.
+    '''
+    invalid_data = {
+        'title': 'Invalid APOD',
+        'url': '',
+        'date': '2023-09-12',
+        'explanation': ''
+    }
+
+    result = apod_google_search_combiner.validate_apod_data(invalid_data)
+
+    assert result is False
 
     Expected_result: combine_results should return a dictionary 
     '''
