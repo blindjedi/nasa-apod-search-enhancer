@@ -64,5 +64,3 @@ Run
 ```bash
 python apod_google_search_combiner.py
 ```
-
-
