@@ -102,6 +102,10 @@ def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any
 
 
 def main():
+    '''
+    Fetches data from the NASA Astronomy Picture of the Day (APOD) API and Google Custom Search API,
+    combines the results, and prints the combined information.
+    '''
     # NASA APOD API Call
     nasa_apod_base_url = 'https://api.nasa.gov/planetary/apod'
     nasa_params = {
