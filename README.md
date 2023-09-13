@@ -4,7 +4,7 @@ This script performs the following tasks:
 
 1. Makes an API call to NASA's Astronomy Picture of the Day (APOD) API at `https://api.nasa.gov/planetary/apod` to retrieve the APOD image and information.
 
-2. Uses the title from the APOD response to make an API call to Google Custom Search API, searching for related information and images at `'https://www.googleapis.com/customsearch/v1'`.
+2. Uses the title from the APOD response to make an API call to Google Custom Search API, searching for related information at `'https://www.googleapis.com/customsearch/v1'`.
 
 3. Combines the results from both API calls into a dictionary.
 
@@ -57,7 +57,7 @@ pip install -r requirements.txt
 
 Test
 ```bash
-python -m pytest apod_google_dearch_combiner.py
+python -m pytest test_apod_google_search_combiner.py
 ```
 
 Run
