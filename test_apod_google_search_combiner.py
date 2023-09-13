@@ -200,3 +200,37 @@ def test_combine_results_invalid_google_data():
     assert result['google_search_data'] == 'No Google Search Results Found'
     assert result['apod_data'] == apod_data
 
+
+@patch('apod_google_search_combiner.api_call')
+def test_main_valid_data(mock_api_call, capsys):
+    """
+    This test case checks whether the main function correctly handles
+    valid APOD and Google Search data and prints the expected output.
+    """
+    mock_apod_response = {
+        'title': 'Sample APOD Title',
+        'url': 'https://apod.nasa.gov/sample.jpg',
+        'date': '2023-09-12',
+        'explanation': 'Sample APOD explanation.'
+    }
+    mock_google_search_response = {
+        'kind': 'customsearch#search',
+        'queries': {'request': [{}]},
+        'context': {'title': 'Beautiful APOD Picture'},
+        'items': [
+            {'title': 'Result 1'},
+            {'title': 'Result 2'}
+        ]
+    }
+
+    mock_api_call.side_effect = [
+        mock_apod_response,
+        mock_google_search_response
+    ]
+
+    apod_google_search_combiner.main()
+
+    captured = capsys.readouterr()
+
+    assert "APOD With Additional Google Search Results:" in captured.out
+    assert "Result 1" in captured.out
