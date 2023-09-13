@@ -1,4 +1,5 @@
 import pytest
+import requests
 from unittest.mock import patch
 
 import apod_google_search_combiner
@@ -45,13 +46,14 @@ def test_api_call_failure(mock_requests_get):
     mock_response.status_code = 404
     mock_response.text = 'Site Not Found'
 
-    with pytest.raises(Exception) as exception:
+    with pytest.raises(requests.exceptions.HTTPError) as exception:
         nasa_apod_base_url = 'https://api.nasa.gov/planetary/apod'
         nasa_params = {'api_key': 'test_api_key'}
-        apod_google_search_combiner.api_call(nasa_apod_base_url, nasa_params)
+        apod_google_search_combiner.api_call(
+            nasa_apod_base_url, nasa_params)
 
-    assert 'Request failed with status code 404' in str(exception.value)
-    assert 'Site Not Found' in str(exception.value)
+    assert 'HTTP error 404: Site Not Found, for request https://api.nasa.gov/planetary/apod' in str(
+        exception.value)
 
 
 def test_combine_results():
