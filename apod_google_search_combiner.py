@@ -45,7 +45,25 @@ def api_call(url: str, params: Dict[str, str]) -> Dict[str, Any]:
         )
 
 
-def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any]) -> Dict[str, Any]:
+def validate_apod_data(apod_data: Dict[str, str]) -> bool:
+    '''
+    This function checks whether the provided APOD data dictionary contains
+    the expected keys ('title', 'url', 'date', and 'explanation') and whether
+    the values for these keys are non-empty strings.
+    '''
+    expected_keys = ['title', 'url', 'date', 'explanation']
+
+    # Check if all expected keys are present
+    if not all(key in apod_data for key in expected_keys):
+        return False
+
+    # Check if the values for these keys are non-empty strings
+    for key in expected_keys:
+        value = apod_data[key]
+        if not isinstance(value, str) or not value.strip():
+            return False
+
+    return True
     '''
     Combines data from the NASA Astronomy Picture of the Day (APOD) API
     and Google Custom Search API into a single dictionary.
