@@ -232,4 +232,5 @@ def test_main_valid_data(mock_api_call, capsys):
     captured = capsys.readouterr()
 
     assert 'APOD With Additional Google Search Results:' in captured.out
+    assert 'Sample APOD Title' in captured.out
     assert 'Result 1' in captured.out
