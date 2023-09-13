@@ -130,6 +130,14 @@ def test_validate_google_search_data_failure():
         invalid_data) is False
 
 
+def test_combine_results_valid_google_data():
+    """
+    This test case validates that the function correctly combines APOD and valid Google search data.
+
+    Expected Result:
+    The combine_results function should return a dictionary with 'apod_data' and 'google_search_data'.
+    'google_search_data' should be a list of items from valid Google search data.
+    """
     apod_data = {
         'title': 'Beautiful APOD Picture',
         'date': '2023-01-01',
@@ -140,22 +148,55 @@ def test_validate_google_search_data_failure():
         'url': 'https://apod.nasa.gov/apod'
 
     }
+
     google_search_data = {
+        'kind': 'customsearch#search',
         'queries': {'request': [{}]},
         'context': {'title': 'Beautiful APOD Picture'},
         'items': [
-            {'link': ''},
-            {'link': ''}
-        ],
-        'url': ''
+            {'title': 'Result 1'},
+            {'title': 'Result 2'}
+        ]
     }
 
-    expected_result = {
-        'apod_data': apod_data,
-        'google_search_data': google_search_data['items']
-    }
+    is_valid_google_data = True
 
     result = apod_google_search_combiner.combine_results(
-        apod_data, google_search_data)
+        apod_data, google_search_data, is_valid_google_data)
 
-    assert result == expected_result
+    assert result['apod_data'] == apod_data
+    assert len(result['google_search_data']) == 2
+
+
+def test_combine_results_invalid_google_data():
+    """
+    This test case validates that the function correctly combines APOD data and handles invalid Google search data.
+
+    Expected Result:
+    The combine_results function should return a dictionary with 'apod_data' and a message indicating
+    that no Google search results were found.
+    """
+    apod_data = {
+        'title': 'Beautiful APOD Picture',
+        'date': '2023-01-01',
+        'explanation': 'This scene would be beautiful even without the comet.',
+        'hdurl': 'https://apod.nasa.gov/apod/image',
+        'media_type': 'image',
+        'service_version': 'v1',
+        'url': 'https://apod.nasa.gov/apod'
+
+    }
+
+    google_search_data = {
+        'kind': 'customsearch#search',
+        'items': []
+    }
+
+    is_valid_google_data = False
+
+    result = apod_google_search_combiner.combine_results(
+        apod_data, google_search_data, is_valid_google_data)
+
+    assert result['google_search_data'] == 'No Google Search Results Found'
+    assert result['apod_data'] == apod_data
+
