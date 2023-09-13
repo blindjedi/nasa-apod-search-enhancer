@@ -64,6 +64,18 @@ def validate_apod_data(apod_data: Dict[str, str]) -> bool:
             return False
 
     return True
+
+
+def validate_google_search_data(google_search_data: Dict[str, Any]) -> bool:
+    '''
+    This function checks if the provided Google search data contains the 'items' key
+    and if it has at least one item in the 'items' list.
+    '''
+    if 'items' in google_search_data and isinstance(google_search_data['items'], list) and len(google_search_data['items']) > 0:
+        return True
+    return False
+
+
     '''
     Combines data from the NASA Astronomy Picture of the Day (APOD) API
     and Google Custom Search API into a single dictionary.
