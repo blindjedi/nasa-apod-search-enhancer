@@ -82,11 +82,11 @@ def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any
     and Google Custom Search API into a single dictionary.
 
     Parameters:
-        apod_data (dict[str, Any]): Data from the APOD API.
-        google_search_data (dict[str, Any]): Data from the Google Custom Search API.
+        apod_data (Dict[str, Any]): Data from the APOD API.
+        google_search_data (Dict[str, Any]): Data from the Google Custom Search API.
 
     Returns:
-        dict[str, Any]: A dictionary containing combined information.
+        Dict[str, Any]: A dictionary containing combined information.
     '''
     if is_valid_google_data:
         return {
