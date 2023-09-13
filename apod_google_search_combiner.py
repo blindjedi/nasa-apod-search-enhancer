@@ -16,7 +16,7 @@ load_dotenv()
 required_env_vars = ['nasa_api_key', 'google_api_key', 'search_engine_id']
 for var_name in required_env_vars:
     if var_name not in os.environ:
-        raise ValueError(f"Environment variable '{var_name}' is not set.")
+        raise ValueError(f'Environment variable '{var_name}' is not set.')
 
 
 def api_call(url: str, params: Dict[str, str]) -> Dict[str, Any]:

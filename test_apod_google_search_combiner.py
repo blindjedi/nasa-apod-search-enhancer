@@ -85,8 +85,7 @@ def test_validate_apod_data_failure():
     invalid APOD data.
     '''
     invalid_data = {
-        'title': 'Invalid APOD',
-        'url': '',
+        'url': 'https://apod.nasa.gov/apod/image/2309/STSCI-HST-abell370_1024.jpg',
         'date': '2023-09-12',
         'explanation': ''
     }
