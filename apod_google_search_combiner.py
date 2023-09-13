@@ -1,8 +1,13 @@
 import os
+import logging
 import requests
 
 from dotenv import load_dotenv
 from typing import Dict, Any
+
+log = logging.getLogger('nasa_apod_search_enhancer')
+log.setLevel(logging.INFO)
+
 
 # Load environment variables from .env into the script's environment
 load_dotenv()
@@ -16,7 +21,7 @@ for var_name in required_env_vars:
 
 def api_call(url: str, params: Dict[str, str]) -> Dict[str, Any]:
     '''
-    Resusable api call for nasa and google custom search api
+    Resusable GET api call for nasa and google custom search api
 
     Parameters:
         url (str): The URL of the API endpoint.
@@ -28,12 +33,16 @@ def api_call(url: str, params: Dict[str, str]) -> Dict[str, Any]:
     Raises:
         Exception: If the API request fails with a non-200 status code.
     '''
+    log.info(f'Sending Get request for url: {url}')
     response = requests.get(url, params=params)
     if response.status_code == 200:
+        log.info(f'Successful GET Request for url: {url}')
         return response.json()
     else:
-        raise Exception(
-            f'Request failed with status code {response.status_code}', response.text)
+        log.error(f'Error during GET request for url: {url}')
+        raise requests.exceptions.HTTPError(
+            f'HTTP error {response.status_code}: {response.text}, for request {url}'
+        )
 
 
 def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any]) -> Dict[str, Any]:
