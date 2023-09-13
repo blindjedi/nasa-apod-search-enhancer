@@ -84,6 +84,7 @@ def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any
     Parameters:
         apod_data (Dict[str, Any]): Data from the APOD API.
         google_search_data (Dict[str, Any]): Data from the Google Custom Search API.
+        is_valid_google_data (bool): bool for if google data is valid
 
     Returns:
         Dict[str, Any]: A dictionary containing combined information.
