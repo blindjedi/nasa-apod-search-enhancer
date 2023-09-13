@@ -68,7 +68,7 @@ def test_validate_apod_data_success():
         'title': 'Galaxy Cluster Abell 370 and Beyond',
         'url': 'https://apod.nasa.gov/apod/image/2309/STSCI-HST-abell370_1024.jpg',
         'date': '2023-09-12',
-        'explanation': "Some 4 billion light-years away, massive galaxy cluster Abell 370..."
+        'explanation': 'Some 4 billion light-years away, massive galaxy cluster Abell 370...'
     }
 
     result = apod_google_search_combiner.validate_apod_data(data)
@@ -87,7 +87,7 @@ def test_validate_apod_data_failure():
     invalid_data = {
         'url': 'https://apod.nasa.gov/apod/image/2309/STSCI-HST-abell370_1024.jpg',
         'date': '2023-09-12',
-        'explanation': ''
+        'explanation': 'Some 4 billion light-years away, massive galaxy cluster Abell 370...'
     }
 
     result = apod_google_search_combiner.validate_apod_data(invalid_data)
@@ -96,13 +96,13 @@ def test_validate_apod_data_failure():
 
 
 def test_validate_google_search_data_success():
-    """
+    '''
     This test case validates that the function correctly handles valid Google search data.
 
     Expected Result:
     The validate_google_search_data function should return True when provided with
     valid Google search data containing 'items'.
-    """
+    '''
     valid_data = {
         'kind': 'customsearch#search',
         'items': [{'title': 'Result 1'}, {'title': 'Result 2'}]
@@ -113,13 +113,13 @@ def test_validate_google_search_data_success():
 
 
 def test_validate_google_search_data_failure():
-    """
+    '''
     This test case validates that the function correctly detects invalid Google search data.
 
     Expected Result:
     The validate_google_search_data function should return False when provided with
     invalid Google search data that lacks 'items'.
-    """
+    '''
     invalid_data = {
         'kind': 'customsearch#search',
         'items': []
@@ -130,13 +130,13 @@ def test_validate_google_search_data_failure():
 
 
 def test_combine_results_valid_google_data():
-    """
+    '''
     This test case validates that the function correctly combines APOD and valid Google search data.
 
     Expected Result:
     The combine_results function should return a dictionary with 'apod_data' and 'google_search_data'.
     'google_search_data' should be a list of items from valid Google search data.
-    """
+    '''
     apod_data = {
         'title': 'Beautiful APOD Picture',
         'date': '2023-01-01',
@@ -168,13 +168,13 @@ def test_combine_results_valid_google_data():
 
 
 def test_combine_results_invalid_google_data():
-    """
+    '''
     This test case validates that the function correctly combines APOD data and handles invalid Google search data.
 
     Expected Result:
     The combine_results function should return a dictionary with 'apod_data' and a message indicating
     that no Google search results were found.
-    """
+    '''
     apod_data = {
         'title': 'Beautiful APOD Picture',
         'date': '2023-01-01',
@@ -202,10 +202,10 @@ def test_combine_results_invalid_google_data():
 
 @patch('apod_google_search_combiner.api_call')
 def test_main_valid_data(mock_api_call, capsys):
-    """
+    '''
     This test case checks whether the main function correctly handles
     valid APOD and Google Search data and prints the expected output.
-    """
+    '''
     mock_apod_response = {
         'title': 'Sample APOD Title',
         'url': 'https://apod.nasa.gov/sample.jpg',
@@ -231,5 +231,5 @@ def test_main_valid_data(mock_api_call, capsys):
 
     captured = capsys.readouterr()
 
-    assert "APOD With Additional Google Search Results:" in captured.out
-    assert "Result 1" in captured.out
+    assert 'APOD With Additional Google Search Results:' in captured.out
+    assert 'Result 1' in captured.out
