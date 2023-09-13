@@ -95,8 +95,41 @@ def test_validate_apod_data_failure():
 
     assert result is False
 
-    Expected_result: combine_results should return a dictionary 
-    '''
+
+def test_validate_google_search_data_success():
+    """
+    This test case validates that the function correctly handles valid Google search data.
+
+    Expected Result:
+    The validate_google_search_data function should return True when provided with
+    valid Google search data containing 'items'.
+    """
+    valid_data = {
+        'kind': 'customsearch#search',
+        'items': [{'title': 'Result 1'}, {'title': 'Result 2'}]
+    }
+
+    assert apod_google_search_combiner.validate_google_search_data(
+        valid_data) is True
+
+
+def test_validate_google_search_data_failure():
+    """
+    This test case validates that the function correctly detects invalid Google search data.
+
+    Expected Result:
+    The validate_google_search_data function should return False when provided with
+    invalid Google search data that lacks 'items'.
+    """
+    invalid_data = {
+        'kind': 'customsearch#search',
+        'items': []
+    }
+
+    assert apod_google_search_combiner.validate_google_search_data(
+        invalid_data) is False
+
+
     apod_data = {
         'title': 'Beautiful APOD Picture',
         'date': '2023-01-01',
