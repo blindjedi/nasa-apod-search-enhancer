@@ -100,25 +100,36 @@ def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any
         }
 
 
-if __name__ == '__main__':
+def main():
     # NASA APOD API Call
     nasa_apod_base_url = 'https://api.nasa.gov/planetary/apod'
     nasa_params = {
         'api_key': os.environ['nasa_api_key']
     }
     apod_data = api_call(nasa_apod_base_url, nasa_params)
+    # validate data
+    is_valid_apod_data = validate_apod_data(apod_data)
 
-    # Google Search API Call using APOD title
-    google_custom_search_base_url = 'https://www.googleapis.com/customsearch/v1'
-    google_params = {
-        'key': os.environ['google_api_key'],
-        'cx': os.environ['search_engine_id'],
-        'q': apod_data['title']
-    }
-    google_search_data = api_call(google_custom_search_base_url, google_params)
+    if is_valid_apod_data is True:
+        # Google Search API Call using APOD title
+        google_custom_search_base_url = 'https://www.googleapis.com/customsearch/v1'
+        google_params = {
+            'key': os.environ['google_api_key'],
+            'cx': os.environ['search_engine_id'],
+            'q': apod_data['title']
+        }
+        google_search_data = api_call(
+            google_custom_search_base_url, google_params)
+        # validate data
+        is_valid_google_data = validate_google_search_data(google_search_data)
 
-    apod_with_additional_info = combine_results(apod_data, google_search_data)
+        apod_with_additional_info = combine_results(
+            apod_data, google_search_data, is_valid_google_data)
 
-    print(
-        f'apod with additional google search results: \n{apod_with_additional_info}'
-    )
+        print(
+            f'APOD With Additional Google Search Results: \n{apod_with_additional_info}'
+        )
+
+
+if __name__ == '__main__':
+    main()
