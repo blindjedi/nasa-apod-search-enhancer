@@ -76,6 +76,7 @@ def validate_google_search_data(google_search_data: Dict[str, Any]) -> bool:
     return False
 
 
+def combine_results(apod_data: Dict[str, str], google_search_data: Dict[str, Any], is_valid_google_data: bool) -> Dict[str, Any]:
     '''
     Combines data from the NASA Astronomy Picture of the Day (APOD) API
     and Google Custom Search API into a single dictionary.
@@ -87,10 +88,16 @@ def validate_google_search_data(google_search_data: Dict[str, Any]) -> bool:
     Returns:
         dict[str, Any]: A dictionary containing combined information.
     '''
-    return {
-        'apod_data': apod_data,
-        'google_search_data': google_search_data['items']
-    }
+    if is_valid_google_data:
+        return {
+            'apod_data': apod_data,
+            'google_search_data': google_search_data['items']
+        }
+    else:
+        return {
+            'apod_data': apod_data,
+            'google_search_data': 'No Google Search Results Found'
+        }
 
 
 if __name__ == '__main__':
